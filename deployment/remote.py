@@ -13,7 +13,7 @@ remote_agent = agent_engines.create(
             "revision": "main",
             "dir": "../chat-agent",
         },
-        "entrypoint_module": "agent",                   # Required.
+        "entrypoint_module": "main",                   # Required.
         "entrypoint_object": "root_agent",              # Required.
         "requirements_file": "requirements.txt",        # Optional.
         # Other optional configs:
