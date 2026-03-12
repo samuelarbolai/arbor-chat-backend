@@ -1,0 +1,14 @@
+# Environment & Configuration
+python-dotenv
+pydantic
+
+# Web Framework & Server
+fastapi
+uvicorn
+
+# Google Agent Development Kit (ADK)
+# Note: Ensure you have access to the specific adk package source if private
+google-adk
+
+# Google GenAI SDK
+google-genai
