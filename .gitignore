@@ -1,11 +1,13 @@
-# Ignore virtual environments in the current dir AND any downstream dir
+# Folders
 **/venv/
 **/.venv/
 **/env/
-**/.env/
 
-# Also ignore python cache (which appears in every downstream folder)
+# Files
+.env
+**/.env
+*.db
+
+# Python Cache
 **/__pycache__/
 *.py[cod]
-
-*.db
