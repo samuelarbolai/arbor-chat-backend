@@ -12,3 +12,9 @@ google-adk
 
 # Google GenAI SDK
 google-genai
+
+# Google Cloud Vertex AI SDK
+google-cloud-aiplatform
+
+# Environment Configuration
+python-dotenv
