@@ -51,8 +51,6 @@ session = session_service.create_session(
     session_id=random_name
 )   
 
-print(f"Initial state: {session.state}")
-
 class ConnectionManager:
     def __init__(self) -> None:
         self.active_connections: list[WebSocket] = []
