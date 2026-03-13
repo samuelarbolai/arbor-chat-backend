@@ -6,6 +6,7 @@ import datetime
 import json
 from pydantic import BaseModel, Field
 from pathlib import Path
+from coolname import generate_slug
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
@@ -35,6 +36,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+random_name = generate_slug(2)
 
 session_service = InMemorySessionService()
 runner = Runner(
@@ -42,7 +44,6 @@ runner = Runner(
     app_name=APP_NAME,
     session_service=session_service
 )
-
 
 class ConnectionManager:
     def __init__(self) -> None:
@@ -81,11 +82,11 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
     
     await manager.connect(websocket)
 
-    user_id, session_id = "user1", "session1"
+    user_id = "user1"
     session = await session_service.create_session(
         app_name=APP_NAME,
         user_id=user_id,
-        session_id=session_id
+        session_id=random_name
     )                           
     print(f"Initial state: {session.state}")
 
@@ -99,7 +100,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
             for event in runner.run(
                 new_message=user_message,
                 user_id=user_id,
-                session_id=session_id,
+                session_id=random_name,
             ):
                 if event.is_final_response() == True:
                     print("Agent:", event.content.parts[0].text)
