@@ -44,6 +44,13 @@ runner = Runner(
     session_service=session_service
 )
 
+user_id = "user1"
+session = session_service.create_session(
+    app_name=APP_NAME,
+    user_id=user_id,
+    session_id=random_name
+)   
+
 class ConnectionManager:
     def __init__(self) -> None:
         self.active_connections: list[WebSocket] = []
@@ -81,12 +88,6 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
     
     await manager.connect(websocket)
 
-    user_id = "user1"
-    session = await session_service.create_session(
-        app_name=APP_NAME,
-        user_id=user_id,
-        session_id=random_name
-    )                           
     print(f"Initial state: {session.state}")
 
     try:
