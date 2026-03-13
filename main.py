@@ -1,7 +1,6 @@
 
 import os
 from dotenv import load_dotenv
-from asyncio import events
 import datetime
 import json
 from pydantic import BaseModel, Field
