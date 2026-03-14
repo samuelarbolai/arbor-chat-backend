@@ -79,6 +79,12 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
     
     await manager.connect(websocket)
     random_name = generate_slug(2)
+    user_id = "user1"
+    await session_service.create_session(
+        app_name=APP_NAME,
+        user_id=user_id,
+        session_id=random_name
+    )
 
     try:
         while True:
@@ -86,14 +92,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
             message_dict = json.loads(data)
             user_message = Message(**message_dict)
             print(f"User: {user_message.content}")
-            user_message = Content(parts=[Part(text=user_message.content)])
-
-            user_id = "user1"
-            await session_service.create_session(
-                app_name=APP_NAME,
-                user_id=user_id,
-                session_id=random_name
-            ) 
+            user_message = Content(parts=[Part(text=user_message.content)]) 
 
             for event in runner.run(
                 new_message=user_message,
