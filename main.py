@@ -35,21 +35,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-random_name = generate_slug(2)
-
 session_service = InMemorySessionService()
 runner = Runner(
     agent=agent.root_agent,
     app_name=APP_NAME,
     session_service=session_service
-)
-
-user_id = "user1"
-session = session_service.create_session(
-    app_name=APP_NAME,
-    user_id=user_id,
-    session_id=random_name
-)   
+)  
 
 class ConnectionManager:
     def __init__(self) -> None:
@@ -87,6 +78,7 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
     print(f"Websocket headers: {websocket.headers}")
     
     await manager.connect(websocket)
+    random_name = generate_slug(2)
 
     try:
         while True:
@@ -95,6 +87,14 @@ async def websocket_endpoint(websocket: WebSocket) -> None:
             user_message = Message(**message_dict)
             print(f"User: {user_message.content}")
             user_message = Content(parts=[Part(text=user_message.content)])
+
+            user_id = "user1"
+            await session_service.create_session(
+                app_name=APP_NAME,
+                user_id=user_id,
+                session_id=random_name
+            ) 
+
             for event in runner.run(
                 new_message=user_message,
                 user_id=user_id,
